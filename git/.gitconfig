@@ -1,0 +1,12 @@
+[user]
+	email = 11238549+DomenickD3@users.noreply.github.com
+	name = DomenickD3
+[merge]
+  tool = vimdiff
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[core]
+	editor = vim
+  fileMode = false

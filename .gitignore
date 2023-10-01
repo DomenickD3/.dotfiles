@@ -1,0 +1,4 @@
+.dotfiles
+*.swp
+.luarc.json
+lazy-lock.json
