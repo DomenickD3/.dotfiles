@@ -1,5 +1,9 @@
 # vim: ai ts=2 sw=2 et sts=2 ft=sh
 
+if [ -f "$HOME/.temp_aliases" ]; then
+  . "$HOME/.temp_aliases"
+fi
+
 # Command aliases
 alias rmswp="find ./ -type f -name \"*.sw[aop]\" -delete"
 alias old='cd $OLDPWD'

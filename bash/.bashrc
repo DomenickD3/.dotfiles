@@ -8,10 +8,6 @@ if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bash_aliases" ]; then
       . "$HOME/.bash_aliases"
     fi
-
-    if [ -f "$HOME/.temp_aliases" ]; then
-      . "$HOME/.temp_aliases"
-    fi
 fi
 
 export PS1="\[\033[38;5;196m\]\u\[$(tput sgr0)\]\[\033[38;5;11m\]@\[$(tput sgr0)\]\[\033[38;5;14m\]\h\[$(tput sgr0)\]\[\033[38;5;11m\][\[$(tput sgr0)\]\[\033[38;5;10m\]\w\[$(tput sgr0)\]\[\033[38;5;11m\]]\\$\[$(tput sgr0)\]"
@@ -22,6 +18,10 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
+
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 ## Functions
 dt() {
