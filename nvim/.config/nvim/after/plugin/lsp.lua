@@ -1,5 +1,12 @@
 local lsp = require('lsp-zero').preset({})
 
+local lspconfig = require 'lspconfig'
+lspconfig["ansiblels"].setup({
+  filetypes = { "yaml", "yml", "ansible" },
+  single_file_support = false,
+  root_dir = lspconfig.util.root_pattern("playbooks", "roles")
+})
+
 -- local lsp = require("lsp-zero")
 -- lsp.preset("recommended")
 
