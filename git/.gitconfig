@@ -1,14 +1,14 @@
 [core]
 	editor = nvim
-  fileMode = false
+	fileMode = false
 [diff]
 	tool = nvimdiff
 [difftool]
 	prompt = false
 [init]
-  defaultBranch = master
+	defaultBranch = master
 [merge]
-  tool = nvimdiff
+	tool = nvimdiff
 [user]
 	email = 11238549+DomenickD3@users.noreply.github.com
 	name = DomenickD3
