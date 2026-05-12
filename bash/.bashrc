@@ -52,7 +52,7 @@ export MANROFFOPT='-c'
 
 # Prefer less' native color support; fall back to termcap overrides for older less.
 if less --help 2>/dev/null | grep -q -- '--use-color'; then
-  export LESS='--use-color -Dd+G -Dk+G -Dsy* -Dur_*' # bold/blink green, standout yellow bold, underline red bold
+  export LESS='--use-color -R -Dd+G -Dk+G -Dsy* -Dur_*' # raw ANSI colors, bold/blink green, standout yellow bold, underline red bold
 else
   export LESS_TERMCAP_mb=$'\e[1;32m'   # blinking text: bright green
   export LESS_TERMCAP_md=$'\e[1;32m'   # bold text: bright green
