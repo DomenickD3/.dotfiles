@@ -1,1 +1,1 @@
-require("domenickd3")
+require("config")

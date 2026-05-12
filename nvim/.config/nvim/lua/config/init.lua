@@ -1,5 +1,5 @@
-require("domenickd3.remap")
-require("domenickd3.options")
+require("config.remap")
+require("config.options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
