@@ -69,7 +69,6 @@ require("lazy").setup({
       { "L3MON4D3/LuaSnip" },     -- Required
     },
   },
-  { "tomtom/tcomment_vim" },
 })
 
 vim.cmd("colorscheme lizard256")
