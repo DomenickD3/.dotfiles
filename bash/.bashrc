@@ -84,6 +84,14 @@ if [ -d "$HOME/.bashrc.d" ]; then
 fi
 
 ## Functions
+rmswp() {
+  find . -type f -name '*.sw[aop]' -delete
+}
+
+old() {
+  cd "$OLDPWD" || return
+}
+
 dt() {
   git difftool HEAD $1
 }
