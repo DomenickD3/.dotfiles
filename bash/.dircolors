@@ -1,20 +1,25 @@
-#Configuration file for dircolors, a utility to help you set the
+# Configuration file for dircolors, a utility to help you set the
 # LS_COLORS environment variable used by GNU ls with the --color option.
 # Copyright (C) 1996-2018 Free Software Foundation, Inc.
 # Copying and distribution of this file, with or without modification,
 # are permitted provided the copyright notice and this notice are preserved.
 # The keywords COLOR, OPTIONS, and EIGHTBIT (honored by the
 # slackware version of dircolors) are recognized but ignored.
-# Below are TERM entries, which can be a glob patterns, to match
-# against the TERM environment variable to determine if it is colorizable.
+# Global config options can be specified before TERM or COLORTERM entries
+# Below are TERM or COLORTERM entries, which can be glob patterns, which
+# restrict following config to systems with matching environment variables.
+COLORTERM ?*
 TERM Eterm
+TERM alacritty*
 TERM ansi
 TERM *color*
 TERM con[0-9]*x[0-9]*
 TERM cons25
 TERM console
 TERM cygwin
+TERM *direct*
 TERM dtterm
+TERM foot
 TERM gnome
 TERM hurd
 TERM jfbterm
@@ -30,6 +35,7 @@ TERM st
 TERM terminator
 TERM tmux*
 TERM vt100
+TERM wezterm*
 TERM xterm*
 # Below are the color init strings for the basic file types. A color init
 # string consists of one or more of the following numeric codes:
@@ -128,6 +134,7 @@ EXEC 01;32
 .dwm 01;31
 .esd 01;31
 # image formats
+.avif 01;35
 .jpg 01;35
 .jpeg 01;35
 .mjpg 01;35
@@ -153,6 +160,7 @@ EXEC 01;32
 .m2v 01;35
 .mkv 01;35
 .webm 01;35
+.webp 01;35
 .ogm 01;35
 .mp4 01;35
 .m4v 01;35

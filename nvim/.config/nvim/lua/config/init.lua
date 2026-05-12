@@ -1,5 +1,5 @@
-require("domenickd3.remap")
-require("domenickd3.options")
+require("config.remap")
+require("config.options")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -23,7 +23,7 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function ()
+    config = function()
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
@@ -42,7 +42,7 @@ require("lazy").setup({
           "query",
           "vim",
           "vimdoc",
-          "yaml"
+          "yaml",
         },
 
         auto_install = true,
@@ -50,26 +50,25 @@ require("lazy").setup({
         highlight = { enable = true },
         indent = { enable = true },
       })
-    end
+    end,
   },
   { "mbbill/undotree" },
   { "tpope/vim-fugitive" },
   {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x",
     dependencies = {
       -- LSP Support
-      {'neovim/nvim-lspconfig'},             -- Required
-      {'williamboman/mason.nvim'},           -- Optional
-      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+      { "neovim/nvim-lspconfig" },             -- Required
+      { "williamboman/mason.nvim" },           -- Optional
+      { "williamboman/mason-lspconfig.nvim" }, -- Optional
 
       -- Autocompletion
-      {'hrsh7th/nvim-cmp'},     -- Required
-      {'hrsh7th/cmp-nvim-lsp'}, -- Required
-      {'L3MON4D3/LuaSnip'},     -- Required
-    }
+      { "hrsh7th/nvim-cmp" },     -- Required
+      { "hrsh7th/cmp-nvim-lsp" }, -- Required
+      { "L3MON4D3/LuaSnip" },     -- Required
+    },
   },
-  { 'tomtom/tcomment_vim' }
 })
 
 vim.cmd("colorscheme lizard256")
