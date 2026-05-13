@@ -21,7 +21,6 @@ Plugins are managed with `lazy.nvim`, which is cloned automatically on first sta
 - `nvim-treesitter/nvim-treesitter`: syntax highlighting and indentation.
 - `mbbill/undotree`: undo history browser.
 - `tpope/vim-fugitive`: Git integration.
-- `VonHeikemen/lsp-zero.nvim`: LSP setup wrapper.
 - `mason.nvim`, `mason-lspconfig.nvim`, `nvim-lspconfig`: LSP installation/configuration.
 - `nvim-cmp`, `cmp-nvim-lsp`, `LuaSnip`: completion and snippets.
 

@@ -14,6 +14,24 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local treesitter_parsers = {
+  "bash",
+  "c",
+  "c_sharp",
+  "cmake",
+  "go",
+  "gomod",
+  "gosum",
+  "lua",
+  "markdown",
+  "markdown_inline",
+  "python",
+  "query",
+  "vim",
+  "vimdoc",
+  "yaml",
+}
+
 require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
@@ -22,53 +40,46 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
+    lazy = false,
+    build = function()
+      require("nvim-treesitter").install(treesitter_parsers):wait(300000)
+    end,
     config = function()
-      local configs = require("nvim-treesitter.configs")
+      local treesitter = require("nvim-treesitter")
 
-      configs.setup({
-        ensure_installed = {
+      treesitter.setup()
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = {
           "bash",
           "c",
-          "c_sharp",
           "cmake",
+          "cs",
           "go",
           "gomod",
-          "gosum",
           "lua",
           "markdown",
-          "markdown_inline",
           "python",
           "query",
           "vim",
           "vimdoc",
           "yaml",
         },
-
-        auto_install = true,
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
+        callback = function()
+          vim.treesitter.start()
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end,
       })
     end,
   },
   { "mbbill/undotree" },
   { "tpope/vim-fugitive" },
-  {
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x",
-    dependencies = {
-      -- LSP Support
-      { "neovim/nvim-lspconfig" },             -- Required
-      { "williamboman/mason.nvim" },           -- Optional
-      { "williamboman/mason-lspconfig.nvim" }, -- Optional
-
-      -- Autocompletion
-      { "hrsh7th/nvim-cmp" },     -- Required
-      { "hrsh7th/cmp-nvim-lsp" }, -- Required
-      { "L3MON4D3/LuaSnip" },     -- Required
-    },
-  },
+  { "neovim/nvim-lspconfig" },
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "L3MON4D3/LuaSnip" },
 })
 
 vim.cmd("colorscheme lizard256")

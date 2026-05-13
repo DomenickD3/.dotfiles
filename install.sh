@@ -93,6 +93,59 @@ install_package() {
   run stow "${stow_args[@]}" "$package"
 }
 
+package_selected() {
+  local wanted="$1"
+  local package
+
+  for package in "${PACKAGES[@]}"; do
+    if [ "$package" = "$wanted" ]; then
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+install_neovim_dependencies() {
+  local nix_packages=()
+
+  if command -v tree-sitter >/dev/null 2>&1 && command -v cc >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if ! command -v nix >/dev/null 2>&1; then
+    log "warning: install tree-sitter and gcc/cc for nvim-treesitter parser builds"
+    return 0
+  fi
+
+  if ! command -v tree-sitter >/dev/null 2>&1; then
+    nix_packages+=("nixpkgs#tree-sitter")
+  fi
+
+  if ! command -v cc >/dev/null 2>&1; then
+    nix_packages+=("nixpkgs#gcc")
+  fi
+
+  if [ "${#nix_packages[@]}" -gt 0 ]; then
+    log "nix: install Neovim Treesitter build dependencies"
+    run nix \
+      --extra-experimental-features nix-command \
+      --extra-experimental-features flakes \
+      profile add "${nix_packages[@]}"
+    hash -r
+  fi
+}
+
+build_neovim_treesitter_parsers() {
+  if ! command -v nvim >/dev/null 2>&1; then
+    log "warning: nvim not found; skipping Treesitter parser build"
+    return 0
+  fi
+
+  log "nvim: build Treesitter parsers"
+  run nvim --headless "+Lazy build nvim-treesitter" "+qa"
+}
+
 DRY_RUN=0
 FORCE=0
 BACKUP_DIR="${HOME}/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
@@ -165,6 +218,11 @@ cd "$REPO_ROOT"
 for package in "${PACKAGES[@]}"; do
   install_package "$package"
 done
+
+if package_selected nvim; then
+  install_neovim_dependencies
+  build_neovim_treesitter_parsers
+fi
 
 if [ "$DRY_RUN" -eq 1 ]; then
   log "dry run complete"

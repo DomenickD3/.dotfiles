@@ -102,7 +102,6 @@ It uses `lazy.nvim` for plugin management and includes:
 - Treesitter
 - Undotree
 - Fugitive
-- LSP Zero
 - Mason / mason-lspconfig / nvim-lspconfig
 - nvim-cmp
 - LuaSnip
