@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # .dotfiles
 
 Personal Linux/WSL dotfiles for shell, tmux, Vim, and Neovim.
@@ -228,3 +229,61 @@ Back up anything important before replacing it.
 ## License
 
 Personal configuration files. Use at your own risk.
+=======
+# dotfiles
+
+Personal dotfiles managed as GNU Stow packages.
+
+## Requirements
+
+- `bash`
+- `stow`
+
+## Install
+
+Clone the repo, change into it, and run the installer:
+
+```bash
+git clone <repo-url> ~/.dotfiles
+cd ~/.dotfiles
+./install.sh
+```
+
+If you do not pass any package names, the installer discovers every top-level package directory and installs the non-empty ones.
+
+## Install Specific Packages
+
+```bash
+./install.sh bash tmux vim nvim
+```
+
+## Preview Changes
+
+Use a dry run to see what Stow would change without modifying your home directory:
+
+```bash
+./install.sh --dry-run
+```
+
+## Conflicts and Backups
+
+When an existing file conflicts with a managed dotfile, the installer moves that file into a timestamped backup directory under `~/.dotfiles-backups/`.
+
+You can override the backup location:
+
+```bash
+./install.sh --backup-dir ~/tmp/dotfiles-backups
+```
+
+If you want conflicting files removed instead of backed up:
+
+```bash
+./install.sh --force
+```
+
+## Help
+
+```bash
+./install.sh --help
+```
+>>>>>>> Stashed changes
