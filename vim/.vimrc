@@ -25,7 +25,31 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'dense-analysis/ale'
 call plug#end()
 
+let g:go_gopls_enabled = 1
+let g:go_gopls_settings = {
+\ 'staticcheck': v:true,
+\ 'analyses': {
+\   'modernize': v:false,
+\ },
+\}
+
 let g:airline_theme = 'simple'
+
+" ALE
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_delay = 300
+let g:ale_linters = {
+\ 'gdscript': ['gdlint'],
+\}
+let g:ale_fixers = {
+\ 'gdscript': ['gdformat'],
+\}
+call ale#fix#registry#Add(
+\ 'gdformat',
+\ 'ale#fixers#gdformat#Fix',
+\ ['gdscript'],
+\ 'Format GDScript with gdformat',
+\)
 
 filetype plugin indent on
 syntax enable
@@ -40,12 +64,12 @@ set modelines=1
 " Display
 set t_Co=256
 colorscheme lizard256
-set nowrap
 set cursorline
 set scrolloff=20
 set number
 set splitright
 set listchars=tab:>-,extends:>
+set wrap
 set visualbell
 set t_vb=
 

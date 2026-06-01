@@ -2,3 +2,5 @@
 *.swp
 .luarc.json
 lazy-lock.json
+vim/.vim/.netrwhist
+vim/.vim/plugged/
