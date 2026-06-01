@@ -60,9 +60,17 @@ prepare_target() {
     return 0
   fi
 
+  if [ -d "$source" ] && [ -d "$target" ] && [ ! -L "$target" ]; then
+    return 0
+  fi
+
   if [ -L "$target" ] || [ -e "$target" ]; then
     log "conflict: $target"
     backup_target "$target"
+  fi
+
+  if [ -d "$source" ]; then
+    run mkdir -p "$target"
   fi
 }
 
@@ -83,7 +91,7 @@ install_package() {
 
   while IFS= read -r entry; do
     prepare_target "$package" "$entry"
-  done < <(cd "$REPO_ROOT/$package" && find . -mindepth 1 | sed 's#^\./##' | sort)
+  done < <(cd "$REPO_ROOT/$package" && find . -mindepth 1 -maxdepth 1 | sed 's#^\./##' | sort)
 
   if [ "$DRY_RUN" -eq 1 ]; then
     stow_args=(-n "${stow_args[@]}")
