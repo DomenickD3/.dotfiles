@@ -114,6 +114,31 @@ package_selected() {
   return 1
 }
 
+install_nix_profile() {
+  local profile_ref="path:$REPO_ROOT#default"
+
+  if [ ! -f "$REPO_ROOT/flake.nix" ]; then
+    return 0
+  fi
+
+  if ! command -v nix >/dev/null 2>&1; then
+    log "warning: nix not found; skipping Nix profile packages"
+    return 0
+  fi
+
+  if nix --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    profile list | grep -F "Original flake URL: path:$REPO_ROOT" >/dev/null 2>&1; then
+    log "nix profile: already installed: $profile_ref"
+    return 0
+  fi
+
+  log "nix profile: $profile_ref"
+  run nix --extra-experimental-features nix-command \
+    --extra-experimental-features flakes \
+    profile install "$profile_ref"
+}
+
 install_neovim_dependencies() {
   local nix_packages=()
 
@@ -196,6 +221,8 @@ while [ "$#" -gt 0 ]; do
 done
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+install_nix_profile
 
 if ! command -v stow >/dev/null 2>&1; then
   log "error: GNU Stow is required but was not found in PATH"
