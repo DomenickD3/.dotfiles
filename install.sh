@@ -15,6 +15,9 @@ Options:
   -h, --help                Show this help text
 
 If no packages are provided, every top-level package directory is installed.
+
+Environment:
+  DOTFILES_SKIP_NIX_PROFILE=1  Skip installing this repo's Nix profile package.
 EOF
 }
 
@@ -50,13 +53,97 @@ backup_target() {
   run mv "$target" "$BACKUP_DIR/$target_rel"
 }
 
+link_points_to() {
+  local link="$1"
+  local expected="$2"
+
+  [ -L "$link" ] || return 1
+  path_points_to "$link" "$expected"
+}
+
+path_points_to() {
+  local path="$1"
+  local expected="$2"
+  local actual
+  local expected_actual
+
+  [ -e "$path" ] || return 1
+
+  actual="$(readlink -f "$path" 2>/dev/null || true)"
+  expected_actual="$(readlink -f "$expected" 2>/dev/null || true)"
+
+  [ -n "$actual" ] && [ "$actual" = "$expected_actual" ]
+}
+
+normalize_owned_link() {
+  local source="$1"
+  local target="$2"
+  local relative_source
+
+  link_points_to "$target" "$source" || return 0
+
+  relative_source="$(realpath --relative-to="$(dirname "$target")" "$source")"
+  if [ "$(readlink "$target")" = "$relative_source" ]; then
+    return 0
+  fi
+
+  log "normalize: $target"
+  run rm "$target"
+  run ln -s "$relative_source" "$target"
+}
+
+normalize_owned_links() {
+  local package="$1"
+  local entry
+  local source
+  local target
+
+  while IFS= read -r entry; do
+    source="$REPO_ROOT/$package/$entry"
+    target="$HOME/$entry"
+    normalize_owned_link "$source" "$target"
+  done < <(cd "$REPO_ROOT/$package" && find . -mindepth 1 | sed 's#^\./##' | sort)
+}
+
+entry_installed() {
+  local source="$1"
+  local target="$2"
+  local child
+
+  if path_points_to "$target" "$source"; then
+    return 0
+  fi
+
+  if [ -d "$source" ] && [ -d "$target" ] && [ ! -L "$target" ]; then
+    while IFS= read -r child; do
+      entry_installed "$source/$child" "$target/$child" || return 1
+    done < <(find "$source" -mindepth 1 -maxdepth 1 -printf '%f\n' | sort)
+    return 0
+  fi
+
+  return 1
+}
+
+package_installed() {
+  local package="$1"
+  local entry
+  local source
+  local target
+
+  while IFS= read -r entry; do
+    source="$REPO_ROOT/$package/$entry"
+    target="$HOME/$entry"
+    entry_installed "$source" "$target" || return 1
+  done < <(cd "$REPO_ROOT/$package" && find . -mindepth 1 -maxdepth 1 | sed 's#^\./##' | sort)
+}
+
 prepare_target() {
   local package="$1"
   local entry="$2"
   local source="$REPO_ROOT/$package/$entry"
   local target="$HOME/$entry"
 
-  if [ -L "$target" ] && [ "$(readlink "$target")" = "$source" ]; then
+  if link_points_to "$target" "$source"; then
     return 0
   fi
 
@@ -89,6 +176,13 @@ install_package() {
     return 0
   fi
 
+  if package_installed "$package"; then
+    log "stow: $package already installed"
+    return 0
+  fi
+
+  normalize_owned_links "$package"
+
   while IFS= read -r entry; do
     prepare_target "$package" "$entry"
   done < <(cd "$REPO_ROOT/$package" && find . -mindepth 1 -maxdepth 1 | sed 's#^\./##' | sort)
@@ -116,6 +210,11 @@ package_selected() {
 
 install_nix_profile() {
   local profile_ref="path:$REPO_ROOT#default"
+
+  if [ "${DOTFILES_SKIP_NIX_PROFILE:-0}" = 1 ]; then
+    log "nix profile: skipped by DOTFILES_SKIP_NIX_PROFILE=1"
+    return 0
+  fi
 
   if [ ! -f "$REPO_ROOT/flake.nix" ]; then
     return 0
