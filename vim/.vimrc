@@ -60,6 +60,7 @@ set autoindent
 set hidden
 set modeline
 set modelines=1
+set autoread
 
 " Display
 set t_Co=256
@@ -100,6 +101,7 @@ inoremap jk <esc>
 
 nnoremap <leader>ev :e $MYVIMRC<CR>
 nnoremap <leader>sv :so $MYVIMRC<CR>
+nnoremap <leader>r :checktime<CR>
 nnoremap <silent> <leader><space> :nohlsearch<CR>
 
 nnoremap <silent> <leader><C-J> :bn<CR>
