@@ -235,7 +235,7 @@ install_nix_profile() {
   log "nix profile: $profile_ref"
   run nix --extra-experimental-features nix-command \
     --extra-experimental-features flakes \
-    profile install "$profile_ref"
+    profile add --priority 20 "$profile_ref"
 }
 
 install_neovim_dependencies() {
