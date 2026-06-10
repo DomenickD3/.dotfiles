@@ -84,6 +84,14 @@ if [ -d "$HOME/.bashrc.d" ]; then
 fi
 
 ## Functions
+txa() {
+  if [ -n "$1" ]; then
+    tmux attach -t "$1"
+  else
+    tmux attach
+  fi
+}
+
 rmswp() {
   find . -type f -name '*.sw[aop]' -delete
 }

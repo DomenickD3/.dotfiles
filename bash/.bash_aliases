@@ -11,7 +11,6 @@ alias nvimdiff='nvim -d'
 alias vd='nvim -d'
 alias tmux='tmux -2' # force tmux to expect 256 colors
 alias tls='tmux ls' # list tmux sessions
-alias txa='tmux attach' # attach to the most recent tmux session
 
 # source dotfiles
 alias sra='. ~/.bash_aliases'
