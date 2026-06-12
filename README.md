@@ -221,15 +221,56 @@ Use a dry run to see what Stow would change without modifying your home director
 
 ### Conflicts and Backups
 
-When an existing file conflicts with a managed dotfile, the installer moves that file into a timestamped backup directory under `~/.dotfiles-backups/`.
+The installer checks each selected Stow package before running `stow`. If an
+existing target path would conflict with a managed dotfile, the installer moves
+that path into a timestamped backup directory before creating the symlink.
 
-You can override the backup location:
+The default backup location is:
+
+```text
+~/.dotfiles-backups/YYYYMMDD-HHMMSS/
+```
+
+For example, if `~/.bashrc` conflicts during installation, it is moved to a path
+like:
+
+```text
+~/.dotfiles-backups/20260611-203000/home/ragnar/.bashrc
+```
+
+Backups preserve the absolute target path underneath the backup directory. This
+makes it possible to restore either one file or a whole config directory without
+guessing where it came from.
+
+To inspect the most recent backup:
+
+```bash
+latest_backup="$(find ~/.dotfiles-backups -mindepth 1 -maxdepth 1 -type d | sort | tail -n 1)"
+find "$latest_backup" \( -type f -o -type l \)
+```
+
+To restore one backed-up file, copy it from the backup path to its original
+location:
+
+```bash
+cp "$latest_backup/home/$USER/.bashrc" ~/.bashrc
+```
+
+To restore a backed-up directory, copy it recursively:
+
+```bash
+cp -a "$latest_backup/home/$USER/.config/nvim" ~/.config/nvim
+```
+
+If you need to keep the backup somewhere else, pass an explicit backup
+directory:
 
 ```bash
 ./install.sh --backup-dir ~/tmp/dotfiles-backups
 ```
 
-If you want conflicting files removed instead of backed up:
+If you want conflicting files removed instead of backed up, use `--force`. Only
+use this when you are certain the conflicting files are disposable:
 
 ```bash
 ./install.sh --force
@@ -240,21 +281,6 @@ If you want conflicting files removed instead of backed up:
 ```bash
 ./install.sh --help
 ```
-
-### Before running Stow
-
-Back up any existing files that would conflict with the symlinks:
-
-```bash
-mkdir -p ~/.backup
-
-mv ~/.bashrc ~/.backup/.bashrc
-mv ~/.bash_aliases ~/.backup/.bash_aliases
-mv ~/.tmux.conf ~/.backup/.tmux.conf
-mv ~/.vimrc ~/.backup/.vimrc
-```
-
-Only move files that already exist and that you want Stow to manage.
 
 ## Notes
 
