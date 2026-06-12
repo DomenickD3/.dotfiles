@@ -44,12 +44,6 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \ 'gdscript': ['gdformat'],
 \}
-call ale#fix#registry#Add(
-\ 'gdformat',
-\ 'ale#fixers#gdformat#Fix',
-\ ['gdscript'],
-\ 'Format GDScript with gdformat',
-\)
 
 filetype plugin indent on
 syntax enable
