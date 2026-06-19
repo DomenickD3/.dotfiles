@@ -1,6 +1,6 @@
 # .dotfiles
 
-Personal Linux/WSL dotfiles for shell, tmux, Vim, and Neovim.
+Personal Linux/WSL dotfiles for shell, Git, tmux, Vim, and Neovim.
 
 ## Overview
 
@@ -9,6 +9,7 @@ This repository stores my terminal and editor configuration files.
 | Area | Path | Purpose |
 |---|---|---|
 | Bash | `bash/` | Shell config, aliases, prompt, PATH setup, helper functions |
+| Git | `git/.config/git/` | Global Git ignore rules |
 | tmux | `tmux/` | Terminal multiplexer config, prefix/binds, window/pane behavior |
 | Neovim | `nvim/.config/nvim/` | Lua-based Neovim configuration |
 | Vim | `vim/` | Vim configuration |
@@ -22,6 +23,8 @@ This repository stores my terminal and editor configuration files.
 │   ├── .bash_aliases
 │   ├── .bashrc.d/
 │   └── .dircolors
+├── git/
+│   └── .config/git/ignore
 ├── nvim/
 │   └── .config/nvim/
 ├── tmux/
@@ -161,6 +164,7 @@ From inside `~/.dotfiles`, each top-level directory can be stowed into `$HOME`:
 
 ```bash
 stow -R bash --target="$HOME"
+stow -R git --target="$HOME"
 stow -R tmux --target="$HOME"
 stow -R nvim --target="$HOME"
 stow -R vim --target="$HOME"
@@ -173,6 +177,8 @@ Given this repo structure:
 ├── bash/
 │   ├── .bashrc
 │   └── .bash_aliases
+├── git/
+│   └── .config/git/ignore
 ├── tmux/
 │   └── .tmux.conf
 ├── nvim/
@@ -186,6 +192,7 @@ Stow creates symlinks in `$HOME` that point back into `~/.dotfiles`:
 ```text
 ~/.bashrc        -> ~/.dotfiles/bash/.bashrc
 ~/.bash_aliases -> ~/.dotfiles/bash/.bash_aliases
+~/.config/git   -> ~/.dotfiles/git/.config/git
 ~/.tmux.conf    -> ~/.dotfiles/tmux/.tmux.conf
 ~/.config/nvim  -> ~/.dotfiles/nvim/.config/nvim
 ~/.vimrc        -> ~/.dotfiles/vim/.vimrc
@@ -208,7 +215,7 @@ stow -D bash --target="$HOME"
 ### Install Specific Packages
 
 ```bash
-./install.sh bash tmux vim nvim
+./install.sh bash git tmux vim nvim
 ```
 
 ### Preview Changes
