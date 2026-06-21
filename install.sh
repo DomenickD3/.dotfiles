@@ -142,22 +142,34 @@ prepare_target() {
   local entry="$2"
   local source="$REPO_ROOT/$package/$entry"
   local target="$HOME/$entry"
+  local child
 
   if link_points_to "$target" "$source"; then
     return 0
   fi
 
-  if [ -d "$source" ] && [ -d "$target" ] && [ ! -L "$target" ]; then
+  if [ -d "$source" ]; then
+    if [ -L "$target" ] || { [ -e "$target" ] && [ ! -d "$target" ]; }; then
+      log "conflict: $target"
+      backup_target "$target"
+    fi
+
+    if [ ! -e "$target" ]; then
+      run mkdir -p "$target"
+    fi
+
+    if [ -d "$target" ] && [ ! -L "$target" ]; then
+      while IFS= read -r child; do
+        prepare_target "$package" "$entry/$child"
+      done < <(find "$source" -mindepth 1 -maxdepth 1 -printf '%f\n' | sort)
+    fi
+
     return 0
   fi
 
   if [ -L "$target" ] || [ -e "$target" ]; then
     log "conflict: $target"
     backup_target "$target"
-  fi
-
-  if [ -d "$source" ]; then
-    run mkdir -p "$target"
   fi
 }
 
