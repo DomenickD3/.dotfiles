@@ -74,6 +74,15 @@ require("lazy").setup({
   },
   { "mbbill/undotree" },
   { "tpope/vim-fugitive" },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    opts = {
+      sign = {
+        enabled = false,
+      },
+    },
+  },
   { "neovim/nvim-lspconfig" },
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },

@@ -19,6 +19,7 @@ Plugins are managed with `lazy.nvim`, which is cloned automatically on first sta
 
 - `nvim-telescope/telescope.nvim`: fuzzy finding.
 - `nvim-treesitter/nvim-treesitter`: syntax highlighting and indentation.
+- `render-markdown.nvim`: inline Markdown rendering.
 - `mbbill/undotree`: undo history browser.
 - `tpope/vim-fugitive`: Git integration.
 - `mason.nvim`, `mason-lspconfig.nvim`, `nvim-lspconfig`: LSP installation/configuration.

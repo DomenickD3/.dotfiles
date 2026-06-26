@@ -23,3 +23,5 @@ alias brc='nvim ~/.bashrc'
 alias nvrc='nvim ~/.config/nvim/init.lua'
 alias trc='nvim ~/.tmux.conf'
 alias vrc='nvim ~/.vimrc'
+
+alias upgrade_codex="nix profile upgrade codex --extra-experimental-features 'nix-command flakes'"

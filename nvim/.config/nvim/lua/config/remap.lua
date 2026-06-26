@@ -5,6 +5,10 @@ vim.keymap.set("n", "<leader><C-K>", ":bn<CR>", { noremap = true, silent = true 
 vim.keymap.set("", "<leader>n", "^", { noremap = true, silent = true })
 vim.keymap.set("", "<leader>m", "$", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader><space>", ":nohlsearch<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { silent = true })
+vim.keymap.set("n", "<leader>q", "<cmd>q<CR>", { silent = true })
+vim.keymap.set("n", "<leader>bd", "<cmd>bd<CR>", { silent = true })
+vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown toggle<CR>", { silent = true })
 
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
