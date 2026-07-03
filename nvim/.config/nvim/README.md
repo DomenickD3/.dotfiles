@@ -45,7 +45,8 @@ General mappings live in `lua/config/remap.lua`.
 
 - `,pv`: open netrw file explorer.
 - `,<C-J>` / `,<C-K>`: previous/next buffer.
-- `,n` / `,m`: first nonblank character / end of line.
+- `,n`: first nonblank character.
+- `,m`: reload current buffer from disk.
 - `,<Space>`: clear search highlight.
 - Visual `J` / `K`: move selected lines down/up.
 - `<C-d>` / `<C-u>`: half-page down/up and recenter.

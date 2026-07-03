@@ -124,6 +124,7 @@ Common mappings:
 | `,fg` | Telescope live grep |
 | `,fh` | Telescope help tags |
 | `,u` | Toggle Undotree |
+| `,m` | Reload current buffer from disk |
 | `,f` | Format with active LSP |
 | `,y` / `,Y` | Yank to system clipboard |
 | `,d` | Delete to black-hole register |
