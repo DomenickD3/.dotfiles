@@ -4,6 +4,29 @@ if [ -f "$HOME/.temp_aliases" ]; then
   . "$HOME/.temp_aliases"
 fi
 
+download_song() {
+  local yt_dlp_bin
+
+  if [ "$#" -ne 1 ]; then
+    printf 'usage: download_song SONG\n' >&2
+    return 2
+  fi
+
+  if command -v yt-dlp >/dev/null 2>&1; then
+    yt_dlp_bin="yt-dlp"
+  elif command -v yt-dlp_linux >/dev/null 2>&1; then
+    yt_dlp_bin="yt-dlp_linux"
+  else
+    printf 'download_song: yt-dlp is not installed\n' >&2
+    return 1
+  fi
+
+  "$yt_dlp_bin" --no-playlist -f 'ba[ext=m4a]' \
+    --paths "home:$HOME/Music/iTunes/iTunes Media/Automatically Add to iTunes" \
+    --paths "temp:$HOME/Music/.yt-dlp-temp" \
+    -- "$1"
+}
+
 # Command aliases
 alias grep='grep --color=auto'
 alias ls='ls -h --color=auto'
