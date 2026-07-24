@@ -25,6 +25,7 @@
             paths = [
               ccusage.packages.${system}.ccusage
               pkgs.codex
+              pkgs.ffmpeg
               pkgs.gcc
               pkgs.gh
               pkgs.gnumake
@@ -38,6 +39,7 @@
               pkgs.tmux
               pkgs.tree-sitter
               pkgs.unison
+              pkgs.yt-dlp
             ];
           };
         });

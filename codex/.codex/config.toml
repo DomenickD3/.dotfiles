@@ -1,0 +1,94 @@
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+
+[projects."/home/ragnar/Projects/environment-setup"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/.dotfiles"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/.dotfiles-private"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Music"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Music/hardstyle"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Projects/My project"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Projects/godot"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Projects/godot/my-first-project"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/godot/my-first-project"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/relationship-tracker"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/friend-keeper"]
+trust_level = "trusted"
+
+[projects."/mnt/c/Users/domen/Projects/flappy-bird-clone"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/archived-skills"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/.dotfiles"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/codex-skills"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/flappy-bird-clone"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/sdlc"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/ideas"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/lawn-care-plan"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/lawn-care-plan/maintenance"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/ralph"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/personal"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/scratch-space"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/discord-voice-transcriber-bot"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/discord-voice-recorder-bot"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects/discord-voice-transcription-pipeline"]
+trust_level = "trusted"
+
+[projects."/home/ragnar/Projects"]
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "run-state", "approval-mode", "five-hour-limit", "weekly-limit", "total-input-tokens", "total-output-tokens", "context-remaining"]
+status_line_use_colors = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+
+[notice.model_migrations]
+"gpt-5.4" = "gpt-5.5"
